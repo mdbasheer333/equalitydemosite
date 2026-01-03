@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Playwright Demo Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        section {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #0070f3;
+            margin-top: 0;
+        }
+
+        input,
+        select,
+        button {
+            margin: 5px 0;
+            padding: 6px;
+            font-size: 16px;
+        }
+
+        select {
+            border-radius: 5px;
+            border: 1px solid #0070f3;
+        }
+
+        button {
+            border-radius: 5px;
+            border: none;
+            background-color: #0070f3;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+
+        #playwright-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background: #f8f9fa;
+            border-right: 1px solid #ddd;
+            padding: 20px 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        #playwright-nav h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #0070f3;
+            text-align: center;
+        }
+
+        #playwright-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0 0;
+        }
+
+        #playwright-nav ul li {
+            margin: 8px 0;
+        }
+
+        #playwright-nav ul li a {
+            text-decoration: none;
+            color: #333;
+            padding: 6px 10px;
+            display: block;
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        #playwright-nav ul li a:hover {
+            background: #0070f3;
+            color: #fff;
+        }
+
+        /* Push page content right of nav */
+        body {
+            margin-left: 240px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<!-- Navigation Menu -->
+<nav id="playwright-nav">
+    <h3>Playwright Playground</h3>
+    <ul>
+        <li><a href="#data-testid-demo">Buttons</a></li>
+        <li><a href="#dropdown-single">Dropdowns</a></li>
+        <li><a href="#checkbox-radio-demo">Checkboxes & Radios</a></li>
+        <li><a href="#alerts">Alerts / Prompt</a></li>
+        <li><a href="#table-demo">Table</a></li>
+        <li><a href="#text-methods-demo">Text Methods</a></li>
+        <li><a href="#same-name-buttons">Same Name Buttons</a></li>
+        <li><a href="#advanced-interactions">Advanced Interactions</a></li>
+        <li><a href="#file-upload-download">File Upload & Download</a></li>
+        <li><a href="#getby-locators">getBy Locators</a></li>
+        <li><a href="#right-click-demo">Right Click</a></li>
+        <li><a href="#modal-demo">Modal Box</a></li>
+        <li><a href="#table1">Table 1</a></li>
+        <li><a href="#table2">Table 2</a></li>
+        <li><a href="#table3">Table 3</a></li>
+    </ul>
+</nav>
+
+<body>
+    <h1>Playwright Demo Page</h1>
+
+    <!-- Test id demo -->
+    <section id="data-testid-demo" style="background:#e8f5e9; padding:20px; border-radius:8px; margin-bottom:20px;">
+        <h2 style="color:#2e7d32;">Data TestID Demo</h2>
+        <p>Button with <code>data-testid</code> attribute:</p>
+        <button data-testid="myTestBtn" id="testidBtn"
+            style="background:#2e7d32; color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">Click
+            Me 1</button>
+        <div id="testidMsg" style="display:none; margin-top:10px; color:#2e7d32; font-weight:bold;">You clicked the
+            button with data-testid!</div>
+        <script>
+            document.getElementById('testidBtn').addEventListener('click', () => {
+                document.getElementById('testidMsg').style.display = 'block';
+            });
+        </script>
+    </section>
+
+    <!-- custom Test id demo -->
+    <section id="custom-testid-demo" style="background:#fffde7; padding:20px; border-radius:8px; margin-bottom:20px;">
+        <h2 style="color:#f9a825;">Custom TestID Attribute Demo</h2>
+        <p>Button with <code>data-qa-id</code> as custom test ID attribute:</p>
+        <button data-qa-id="customBtn" id="customTestidBtn"
+            style="background:#f9a825; color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">Click
+            Me 2</button>
+        <div id="customTestidMsg" style="display:none; margin-top:10px; color:#f9a825; font-weight:bold;">You clicked
+            the button with custom test ID!</div>
+        <script>
+            document.getElementById('customTestidBtn').addEventListener('click', () => {
+                document.getElementById('customTestidMsg').style.display = 'block';
+            });
+        </script>
+    </section>
+
+    <!-- GetBy Locators Section -->
+    <section id="getby-locators">
+        <h2>Playwright getBy Locators Demo</h2>
+        <p>This section demonstrates various Playwright <code>getBy*</code> locators.</p>
+
+        <!-- getByLabel -->
+        <label for="usernameInput">Username:</label>
+        <input type="text" id="usernameInput" placeholder="Enter username"><br>
+
+        <!-- getByPlaceholder -->
+        <input type="password" id="passwordInput" placeholder="Enter password"><br>
+
+        <!-- getByRole -->
+        <button id="loginBtn">Login</button>
+        <button id="cancelBtn">Cancel</button><br>
+
+        <!-- getByText -->
+        <p id="infoText">This is a sample paragraph for getByText demo.</p>
+
+        <!-- getByTitle -->
+        <a href="#" title="Help Link" id="helpLink">Help</a><br>
+
+        <!-- getByAltText -->
+        <img src="/Users/basheermohammad/Documents/cjs.png" alt="Sample Image" id="sampleImg">
+
+        <p id="getByResult"></p>
+
+        <script>
+            // Simple JS to show clicks/interactions
+            document.getElementById('loginBtn').addEventListener('click', () => {
+                document.getElementById('getByResult').textContent = 'Login button clicked!';
+            });
+            document.getElementById('cancelBtn').addEventListener('click', () => {
+                document.getElementById('getByResult').textContent = 'Cancel button clicked!';
+            });
+            document.getElementById('helpLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('getByResult').textContent = 'Help link clicked!';
+            });
+            document.getElementById('sampleImg').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('getByResult').textContent = 'image clicked!';
+            });
+        </script>
+    </section>
+
+    <!-- Text Input Section -->
+    <section id="text-input">
+        <h2>TextBox Interaction</h2>
+        <label for="name">Enter Name:</label>
+        <input type="text" id="name" placeholder="Type your name">
+        <input type="email" id="email" placeholder="Enter email">
+        <button onclick="showName()">Show Entered Info</button>
+        <p id="nameResult"></p>
+
+        <script>
+            function showName() {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                alert(`Name: ${name}, Email: ${email}`);
+                document.getElementById('nameResult').textContent = `Entered Name: ${name}, Email: ${email}`;
+            }
+        </script>
+    </section>
+
+    <!-- Button Click Section -->
+    <section id="buttons">
+        <h2>Button Clicks</h2>
+        <button id="btnClickMe">Click Here</button>
+        <button id="btnGreet">Greet</button>
+        <p id="clickResult"></p>
+
+        <script>
+            document.getElementById('btnClickMe').addEventListener('click', () => {
+                document.getElementById('clickResult').textContent = 'Button "Click Me" clicked!';
+            });
+            document.getElementById('btnGreet').addEventListener('click', () => {
+                const name = document.getElementById('name').value || 'Guest';
+                document.getElementById('clickResult').textContent = `Hello, ${name}!`;
+            });
+        </script>
+    </section>
+
+    <!-- Single-select Dropdown Section -->
+    <section id="dropdown-single">
+        <h2>Single-select Dropdown (Indian States)</h2>
+        <select id="statesDropdown">
+            <option value="">Select a state</option>
+            <option value="MH">Maharashtra</option>
+            <option value="KA">Karnataka</option>
+            <option value="DL">Delhi</option>
+            <option value="TN">Tamil Nadu</option>
+            <option value="WB">West Bengal</option>
+            <option value="UP">Uttar Pradesh</option>
+            <option value="GJ">Gujarat</option>
+        </select>
+        <p id="stateResult"></p>
+
+        <script>
+            document.getElementById('statesDropdown').addEventListener('change', (e) => {
+                document.getElementById('stateResult').textContent = 'Selected state: ' + e.target.options[e.target.selectedIndex].text;
+            });
+        </script>
+    </section>
+
+    <!-- Multi-select Dropdown Section -->
+    <section id="dropdown-multi">
+        <h2>Multi-select Dropdown (Fruits)</h2>
+        <select id="fruitsDropdown" multiple size="10">
+            <option value="apple">Apple</option>
+            <option value="banana">Banana</option>
+            <option value="mango">Mango</option>
+            <option value="orange">Orange</option>
+            <option value="grapes">Grapes</option>
+            <option value="pineapple">Pineapple</option>
+            <option value="papaya">Papaya</option>
+            <option value="kiwi">Kiwi</option>
+            <option value="strawberry">Strawberry</option>
+            <option value="blueberry">Blueberry</option>
+        </select>
+        <button onclick="showSelectedFruits()">Show Selected Fruits</button>
+        <p id="fruitsResult"></p>
+
+        <script>
+            function showSelectedFruits() {
+                const selected = Array.from(document.getElementById('fruitsDropdown').selectedOptions).map(opt => opt.text);
+                document.getElementById('fruitsResult').textContent = 'Selected fruits: ' + selected.join(', ');
+            }
+        </script>
+    </section>
+
+    <!-- Alerts, Confirm, Prompt Section -->
+    <section id="alerts">
+        <h2>Alerts, Confirm & Prompt</h2>
+        <button onclick="showAlert()">Show Alert</button>
+        <button onclick="showConfirm()">Show Confirm</button>
+        <button onclick="showPrompt()">Show Prompt</button>
+        <p id="alertResult"></p>
+
+        <script>
+            function showAlert() {
+                alert('This is an alert!');
+                document.getElementById('alertResult').textContent = 'Alert was shown and OK clicked';
+            }
+
+            function showConfirm() {
+                const res = confirm('Do you confirm?');
+                document.getElementById('alertResult').textContent = res ? 'User clicked OK on Confirm' : 'User clicked Cancel on Confirm';
+            }
+
+            function showPrompt() {
+                const name = prompt('Enter your name:');
+                if (name) {
+                    document.getElementById('alertResult').textContent = 'User entered: ' + name;
+                } else {
+                    document.getElementById('alertResult').textContent = 'User cancelled the prompt';
+                }
+            }
+        </script>
+    </section>
+
+    <!-- Table Section -->
+    <section id="table-demo">
+        <h2>Table Interaction</h2>
+        <table id="productTable">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Apple</td>
+                    <td>100</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <td>Banana</td>
+                    <td>30</td>
+                    <td>150</td>
+                </tr>
+                <tr>
+                    <td>Mango</td>
+                    <td>120</td>
+                    <td>70</td>
+                </tr>
+                <tr>
+                    <td>Orange</td>
+                    <td>80</td>
+                    <td>90</td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="showTableData()">Show Table Data in Console</button>
+
+        <script>
+            function showTableData() {
+                const rows = document.querySelectorAll('#productTable tbody tr');
+                const data = [];
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    data.push({
+                        product: cells[0].textContent,
+                        price: cells[1].textContent,
+                        stock: cells[2].textContent
+                    });
+                });
+                console.log('Table Data:', data);
+                alert('Table data printed in console!');
+            }
+        </script>
+    </section>
+
+    <!-- Locator All Section -->
+    <section id="locator-all-demo">
+        <h2>Locator All Demo</h2>
+        <p>This section shows multiple elements</p>
+
+        <ul id="fruitList">
+            <li class="fruit">Apple</li>
+            <li class="fruit">Banana</li>
+            <li class="fruit">Mango</li>
+            <li class="fruit">Orange</li>
+            <li class="fruit">Grapes</li>
+            <li class="fruit">Papaya</li>
+            <li class="fruit">Peach</li>
+            <li class="fruit">Avacado</li>
+        </ul>
+
+        <button onclick="highlightAllFruits()">Highlight All Fruits</button>
+        <p id="locatorAllResult"></p>
+
+        <style>
+            .highlight {
+                background-color: yellow;
+                font-weight: bold;
+            }
+        </style>
+
+        <script>
+            function highlightAllFruits() {
+                const fruits = document.querySelectorAll('#fruitList .fruit');
+                fruits.forEach(fruit => fruit.classList.add('highlight'));
+                document.getElementById('locatorAllResult').textContent = `Highlighted ${fruits.length} fruits. Check the list above!`;
+            }
+        </script>
+
+    </section>
+
+    <!-- Text Content Methods Section -->
+    <section id="text-methods-demo">
+        <h2>Playwright Text Methods Demo</h2>
+        <p>We have multiple fruit items, some with hidden text and HTML:</p>
+
+        <ul id="fruitTextListAdv">
+            <li class="fruitAdv" data-info="apple" id="appleId"><span>Apple</span><span style="display:none">
+                    Kashmir</span></li>
+            <li class="fruitAdv" data-info="banana" id="bananaId"><span>Banana</span></li>
+            <li class="fruitAdv" data-info="mango"><span>Mango</span><strong>!</strong></li>
+            <li class="fruitAdv" data-info="mango"><span>Papaya</span><strong>!</strong></li>
+            <li class="fruitAdv" data-info="mango"><span>Avacado</span><strong>!</strong></li>
+            <li class="fruitAdv" data-info="mango"><span>Water melon</span><strong>!</strong></li>
+        </ul>
+
+        <button onclick="showTextDemo()">Show Text Examples</button>
+
+        <p id="textDemoResult"></p>
+
+        <script>
+            function showTextDemo() {
+                const fruits = document.querySelectorAll('#fruitTextList .fruit');
+
+                let results = '';
+
+                // single element examples (first element)
+                const first = fruits[0];
+                results += `<b>textContent:</b> ${first.textContent}<br>`; // raw text including hidden
+                results += `<b>innerText:</b> ${first.innerText}<br>`;     // visible text
+                results += `<b>innerHTML:</b> ${first.innerHTML}<br><br>`; // html inside element
+
+                // all elements examples
+                const allTextContents = Array.from(fruits).map(el => el.textContent);
+                const allInnerTexts = Array.from(fruits).map(el => el.innerText);
+
+                results += `<b>allTextContents:</b> [${allTextContents.join(', ')}]<br>`;
+                results += `<b>allInnerTexts:</b> [${allInnerTexts.join(', ')}]<br>`;
+
+                document.getElementById('textDemoResult').innerHTML = results;
+            }
+        </script>
+    </section>
+
+    <!-- Advanced Locators Section -->
+    <section id="advanced-locators-demo">
+        <h2>Advanced Locators Demo</h2>
+        <p>This section demonstrates <code>getByRole</code>, <code>getByLabel</code>, <code>filter</code>, and
+            <code>nth</code> methods.
+        </p>
+
+        <!-- Form Inputs -->
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Enter username">
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter password">
+        <button id="loginBtn">Login</button>
+
+        <hr>
+
+        <!-- List of buttons to demo nth and filter -->
+        <button class="colorBtn" data-color="red">Red</button>
+        <button class="colorBtn" data-color="green">Green</button>
+        <button class="colorBtn" data-color="blue">Blue</button>
+        <button class="colorBtn" data-color="yellow">Yellow</button>
+        <p id="advancedLocatorResult"></p>
+
+        <script>
+            // Filter example: highlight all green buttons
+            const colorButtons = document.querySelectorAll('.colorBtn');
+            colorButtons.forEach(btn => btn.addEventListener('click', (e) => {
+                document.getElementById('advancedLocatorResult').textContent = `Clicked color: ${e.target.dataset.color}`;
+            }));
+
+            // Optional: Pre-highlight the 2nd button (nth)
+            colorButtons[1].style.border = '2px solid #0070f3';
+        </script>
+    </section>
+
+    <!-- Same-name Buttons Demo -->
+    <section id="same-name-buttons">
+        <h2>Same-name Buttons Demo (6 Buttons)</h2>
+        <p>All buttons have the text "Click Me", but clicking each shows a different message.</p>
+
+        <button class="sameBtn" data-message="Hello from Button 1">Click Me</button>
+        <button class="sameBtn" data-message="Welcome from Button 2">Click Me</button>
+        <button class="sameBtn" data-message="Goodbye from Button 3">Click Me</button>
+        <button class="sameBtn" data-message="Greetings from Button 4">Click Me</button>
+        <button class="sameBtn" data-message="Cheers from Button 5">Click Me</button>
+        <button class="sameBtn" data-message="Farewell from Button 6">Click Me</button>
+
+        <p id="sameBtnResult"></p>
+
+        <script>
+            const buttons = document.querySelectorAll('.sameBtn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.getElementById('sameBtnResult').textContent = e.target.dataset.message;
+                });
+            });
+        </script>
+    </section>
+
+    <!-- Checkboxes & Radio Buttons Section -->
+    <section id="checkbox-radio-demo">
+        <h2>Checkboxes & Radio Buttons Demo</h2>
+        <p>This section demonstrates different states for checkboxes and radio buttons.</p>
+
+        <h3>Checkboxes</h3>
+        <label><input type="checkbox" id="cbEnabled" /> Enabled / Unchecked</label><br>
+        <label><input type="checkbox" id="cbEnabledChecked" checked /> Enabled / Checked</label><br>
+        <label><input type="checkbox" id="cbDisabled" disabled /> Disabled / Unchecked</label><br>
+        <label><input type="checkbox" id="cbDisabledChecked" disabled checked /> Disabled / Checked</label><br>
+
+        <h3>Radio Buttons (Group 1)</h3>
+        <label><input type="radio" name="radioGroup" id="radioEnabled" /> Enabled / Unselected</label><br>
+        <label><input type="radio" name="radioGroup" id="radioEnabledSelected" checked /> Enabled / Selected</label><br>
+        <label><input type="radio" name="radioGroup" id="radioDisabled" disabled /> Disabled / Unselected</label><br>
+        <label><input type="radio" name="radioGroup" id="radioDisabledSelected" disabled checked /> Disabled /
+            Selected</label><br>
+
+        <p id="checkboxRadioResult"></p>
+
+        <script>
+            // Event listeners for checkboxes
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    document.getElementById('checkboxRadioResult').textContent =
+                        `Checkbox ${e.target.id} is now ${e.target.checked ? 'checked' : 'unchecked'}`;
+                });
+            });
+
+            // Event listeners for radio buttons
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(rb => {
+                rb.addEventListener('change', (e) => {
+                    document.getElementById('checkboxRadioResult').textContent =
+                        `Radio button ${e.target.id} is now selected`;
+                });
+            });
+        </script>
+    </section>
+
+    <!-- Advanced Playwright Interactions -->
+    <section id="advanced-interactions">
+        <h2>Advanced Playwright Interactions</h2>
+
+        <!-- Double Click -->
+        <button id="dblClickBtn">Double Click Me</button>
+        <p id="dblClickResult"></p>
+
+        <!-- Drag and Drop -->
+        <div id="dragContainer" style="display:flex; gap:20px; margin-top:10px;">
+            <div id="dragItem" draggable="true"
+                style="width:100px; height:50px; background-color:#0070f3; color:white; display:flex; align-items:center; justify-content:center; cursor:grab;">
+                Drag Me</div>
+            <div id="dropTarget"
+                style="width:150px; height:50px; border:2px dashed #0070f3; display:flex; align-items:center; justify-content:center;">
+                Drop Here</div>
+        </div>
+        <p id="dragResult"></p>
+
+        <!-- Hover -->
+        <div id="hoverBox"
+            style="width:150px;height:50px;background:#ccc;margin-top:10px;text-align:center;line-height:50px;">Hover
+            over me</div>
+        <p id="hoverResult"></p>
+
+        <!-- Date Field -->
+        <input type="date" id="dateField" style="margin-top:10px;">
+        <p id="dateResult"></p>
+
+        <!-- Menu & Submenu -->
+        <ul id="menu" style="list-style:none;padding:0;margin-top:10px;">
+            <li id="menu1" style="padding:5px;background:#eee;cursor:pointer;">Menu 1
+                <ul class="submenu" style="display:none;list-style:none;padding-left:20px;">
+                    <li style="padding:5px;background:#ddd;cursor:pointer;">Submenu 1-1</li>
+                    <li style="padding:5px;background:#ddd;cursor:pointer;">Submenu 1-2</li>
+                </ul>
+            </li>
+            <li id="menu2" style="padding:5px;background:#eee;cursor:pointer;">Menu 2
+                <ul class="submenu" style="display:none;list-style:none;padding-left:20px;">
+                    <li style="padding:5px;background:#ddd;cursor:pointer;">Submenu 2-1</li>
+                </ul>
+            </li>
+        </ul>
+        <p id="menuResult"></p>
+
+        <!-- Shadow DOM -->
+        <div id="shadowHost" style="margin-top:10px;"></div>
+        <p id="shadowResult"></p>
+
+        <script>
+            // Double Click
+            document.getElementById('dblClickBtn').addEventListener('dblclick', () => {
+                document.getElementById('dblClickResult').textContent = 'Button double-clicked!';
+            });
+
+            // Drag and Drop
+            const dragItem = document.getElementById('dragItem');
+            const dropTarget = document.getElementById('dropTarget');
+
+            dragItem.addEventListener('dragstart', (e) => { e.dataTransfer.setData('text/plain', 'dragged'); });
+            dropTarget.addEventListener('dragover', (e) => e.preventDefault());
+            dropTarget.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropTarget.textContent = 'Dropped!';
+                document.getElementById('dragResult').textContent = 'Drag & Drop performed!';
+            });
+
+            // Hover
+            const hoverBox = document.getElementById('hoverBox');
+            hoverBox.addEventListener('mouseenter', () => { document.getElementById('hoverResult').textContent = 'Hovered over box!'; });
+
+            // Date field
+            document.getElementById('dateField').addEventListener('change', (e) => {
+                document.getElementById('dateResult').textContent = 'Selected date: ' + e.target.value;
+            });
+
+            // Menu & Submenu
+            document.querySelectorAll('#menu li').forEach(menu => {
+                menu.addEventListener('mouseenter', () => {
+                    const submenu = menu.querySelector('.submenu');
+                    if (submenu) submenu.style.display = 'block';
+                });
+                menu.addEventListener('mouseleave', () => {
+                    const submenu = menu.querySelector('.submenu');
+                    if (submenu) submenu.style.display = 'none';
+                });
+                menu.querySelectorAll('.submenu li').forEach(sub => {
+                    sub.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        document.getElementById('menuResult').textContent = 'Clicked: ' + sub.textContent;
+                    });
+                });
+            });
+
+            // Shadow DOM
+            const shadowHost = document.getElementById('shadowHost');
+            const shadowRoot = shadowHost.attachShadow({ mode: 'open' });
+            const shadowBtn = document.createElement('button');
+            shadowBtn.textContent = 'Shadow Button';
+            shadowBtn.addEventListener('click', () => { document.getElementById('shadowResult').textContent = 'Shadow button clicked!'; });
+            shadowRoot.appendChild(shadowBtn);
+        </script>
+    </section>
+
+    <!-- File Upload & Download Section -->
+    <section id="file-upload-download">
+        <h2>File Upload & Download Demo</h2>
+
+        <!-- File Upload -->
+        <label for="uploadFile">Upload a file:</label>
+        <input type="file" id="uploadFile" />
+        <p id="uploadResult"></p>
+
+        <!-- File Download -->
+        <a href="/Users/basheermohammad/Desktop/generate_json_files.docx" download id="downloadLink">Download Sample
+            File</a>
+        <p id="downloadResult"></p>
+
+        <script>
+            // File Upload
+            document.getElementById('uploadFile').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    document.getElementById('uploadResult').textContent = `Selected file: ${file.name} (${file.type}, ${file.size} bytes)`;
+                } else {
+                    document.getElementById('uploadResult').textContent = 'No file selected';
+                }
+            });
+
+            // File Download
+            document.getElementById('downloadLink').addEventListener('click', () => {
+                document.getElementById('downloadResult').textContent = 'Download initiated!';
+            });
+        </script>
+    </section>
+
+    <!-- Right Click / Context Menu Section -->
+    <section id="right-click-demo">
+        <h2>Right Click / Context Menu Demo</h2>
+        <p>Right-click the box below to see a context menu action.</p>
+
+        <div id="rightClickBox"
+            style="width:200px;height:100px;background:#eee;border:1px solid #ccc;line-height:100px;text-align:center;cursor:pointer;">
+            Right Click Me
+        </div>
+        <p id="rightClickResult"></p>
+
+        <script>
+            const box = document.getElementById('rightClickBox');
+            box.addEventListener('contextmenu', (e) => {
+                e.preventDefault(); // prevent default browser menu
+                document.getElementById('rightClickResult').textContent = 'Right-click detected!';
+            });
+        </script>
+    </section>
+
+    <!-- Modal Box Section -->
+    <section id="modal-demo">
+        <h2>Modal Box Demo</h2>
+        <p>Click the button below to open a modal.</p>
+
+        <button id="openModalBtn">Open Modal</button>
+
+        <!-- Modal -->
+        <div id="myModal"
+            style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+            <div style="background:white; padding:20px; border-radius:8px; width:300px; text-align:center;">
+                <p>This is a modal box!</p>
+                <button id="closeModalBtn">Close Modal</button>
+            </div>
+        </div>
+
+        <p id="modalResult"></p>
+
+        <script>
+            const modal = document.getElementById('myModal');
+            const openBtn = document.getElementById('openModalBtn');
+            const closeBtn = document.getElementById('closeModalBtn');
+            const result = document.getElementById('modalResult');
+
+            openBtn.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                result.textContent = 'Modal opened';
+            });
+
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                result.textContent = 'Modal closed';
+            });
+        </script>
+    </section>
+
+    <section id="wait-for-hidden-demo" style="background:#f0f8ff; padding:20px; border-radius:8px; margin-bottom:20px;">
+        <h2 style="color:#0070f3;">Wait for Hidden Demo</h2>
+        <p>Click the button to trigger a message which will appear after 15 seconds and then disappear after 10 seconds:
+        </p>
+
+        <button id="showMessageBtn"
+            style="background:#0070f3; color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">
+            Click Me
+        </button>
+
+        <div id="messageContainer"></div>
+
+        <script>
+            document.getElementById('showMessageBtn').addEventListener('click', () => {
+                setTimeout(() => {
+                    const msg = document.createElement('div');
+                    msg.id = 'clickMessage';
+                    msg.style.marginTop = '10px';
+                    msg.style.padding = '10px';
+                    msg.style.background = '#d0f0fd';
+                    msg.style.border = '1px solid #0070f3';
+                    msg.style.borderRadius = '4px';
+                    msg.style.color = '#0070f3';
+                    msg.style.fontWeight = 'bold';
+                    msg.innerText = 'This message appeared 35 seconds after click and will disappear after 20 seconds!';
+
+                    document.getElementById('messageContainer').appendChild(msg);
+
+                    // remove after 10s
+                    setTimeout(() => {
+                        msg.remove();
+                    }, 20000);
+                }, 35000);
+            });
+        </script>
+    </section>
+
+    <section id="table1">
+        <h2>Table 1 – Static Data</h2>
+        <table border="1" id="mytable1">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>full Name</th>
+                    <th>Country</th>
+                    <th>Dept</th>
+                    <th>Role</th>
+                    <th>Age</th>
+                    <th>Salary</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Basheer</td>
+                    <td>India</td>
+                    <td>QA</td>
+                    <td>Engineer</td>
+                    <td>37</td>
+                    <td>50K</td>
+                    <td>Active</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Rahul</td>
+                    <td>India</td>
+                    <td>Dev</td>
+                    <td>Lead</td>
+                    <td>35</td>
+                    <td>80K</td>
+                    <td>Active</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Anita</td>
+                    <td>USA</td>
+                    <td>HR</td>
+                    <td>Manager</td>
+                    <td>40</td>
+                    <td>70K</td>
+                    <td>Active</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>John</td>
+                    <td>UK</td>
+                    <td>Sales</td>
+                    <td>Rep</td>
+                    <td>32</td>
+                    <td>60K</td>
+                    <td>Inactive</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Sara</td>
+                    <td>Canada</td>
+                    <td>QA</td>
+                    <td>Lead</td>
+                    <td>34</td>
+                    <td>65K</td>
+                    <td>Active</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Ali</td>
+                    <td>UAE</td>
+                    <td>Ops</td>
+                    <td>Engineer</td>
+                    <td>29</td>
+                    <td>55K</td>
+                    <td>Active</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>David</td>
+                    <td>USA</td>
+                    <td>IT</td>
+                    <td>Admin</td>
+                    <td>42</td>
+                    <td>75K</td>
+                    <td>Inactive</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Meena</td>
+                    <td>India</td>
+                    <td>Finance</td>
+                    <td>Analyst</td>
+                    <td>36</td>
+                    <td>68K</td>
+                    <td>Active</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Tom</td>
+                    <td>UK</td>
+                    <td>Support</td>
+                    <td>Exec</td>
+                    <td>31</td>
+                    <td>48K</td>
+                    <td>Active</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Nina</td>
+                    <td>Germany</td>
+                    <td>QA</td>
+                    <td>Engineer</td>
+                    <td>28</td>
+                    <td>52K</td>
+                    <td>Active</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="table2">
+        <h2>Table 2 – Select Rows</h2>
+        <table border="1" id="mytable2">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>full Name</th>
+                    <th>Country</th>
+                    <th>Dept</th>
+                    <th>Role</th>
+                    <th>Age</th>
+                    <th>Salary</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Basheer</td>
+                    <td>India</td>
+                    <td>QA</td>
+                    <td>Engineer</td>
+                    <td>37</td>
+                    <td>50K</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Rahul</td>
+                    <td>India</td>
+                    <td>Dev</td>
+                    <td>Lead</td>
+                    <td>35</td>
+                    <td>80K</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Anita</td>
+                    <td>USA</td>
+                    <td>HR</td>
+                    <td>Manager</td>
+                    <td>40</td>
+                    <td>70K</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>John</td>
+                    <td>UK</td>
+                    <td>Sales</td>
+                    <td>Rep</td>
+                    <td>32</td>
+                    <td>60K</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Sara</td>
+                    <td>Canada</td>
+                    <td>QA</td>
+                    <td>Lead</td>
+                    <td>34</td>
+                    <td>65K</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Ali</td>
+                    <td>UAE</td>
+                    <td>Ops</td>
+                    <td>Engineer</td>
+                    <td>29</td>
+                    <td>55K</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>David</td>
+                    <td>USA</td>
+                    <td>IT</td>
+                    <td>Admin</td>
+                    <td>42</td>
+                    <td>75K</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="table3">
+        <h2>Table 3 – Delete Row</h2>
+
+        <table border="1" id="mytable3" style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>full Name</th>
+                    <th>Country</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th>Age</th>
+                    <th>Salary</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Basheer</td>
+                    <td>India</td>
+                    <td>QA</td>
+                    <td>Engineer</td>
+                    <td>37</td>
+                    <td>50K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Rahul</td>
+                    <td>India</td>
+                    <td>Dev</td>
+                    <td>Lead</td>
+                    <td>35</td>
+                    <td>80K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Anita</td>
+                    <td>USA</td>
+                    <td>HR</td>
+                    <td>Manager</td>
+                    <td>40</td>
+                    <td>70K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>John</td>
+                    <td>UK</td>
+                    <td>Sales</td>
+                    <td>Rep</td>
+                    <td>32</td>
+                    <td>60K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Sara</td>
+                    <td>Canada</td>
+                    <td>QA</td>
+                    <td>Lead</td>
+                    <td>34</td>
+                    <td>65K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Ali</td>
+                    <td>UAE</td>
+                    <td>Ops</td>
+                    <td>Engineer</td>
+                    <td>29</td>
+                    <td>55K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>David</td>
+                    <td>USA</td>
+                    <td>IT</td>
+                    <td>Admin</td>
+                    <td>42</td>
+                    <td>75K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Meena</td>
+                    <td>India</td>
+                    <td>Finance</td>
+                    <td>Analyst</td>
+                    <td>36</td>
+                    <td>68K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Tom</td>
+                    <td>UK</td>
+                    <td>Support</td>
+                    <td>Exec</td>
+                    <td>31</td>
+                    <td>48K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Nina</td>
+                    <td>Germany</td>
+                    <td>QA</td>
+                    <td>Engineer</td>
+                    <td>28</td>
+                    <td>52K</td>
+                    <td><button onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        function deleteRow(btn) {
+            const row = btn.closest("tr");
+            row.remove();
+        }
+    </script>
+
+
+</body>
+
+</html>
